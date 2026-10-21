@@ -1,0 +1,11 @@
+{
+  "name": "edusync-pro",
+  "version": "3.0.0",
+  "description": "EduSync Pro — Smart Campus Management Platform for SISTec GN Bhopal",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "npx serve ."
+  },
+  "engines": { "node": ">=18" }
+}
