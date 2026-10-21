@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#05070d"/>
+<meta name="description" content="EduSync Pro — Smart Campus Management Platform for SISTec GN Bhopal"/>
+<title>EduSync Pro — SISTec GN Bhopal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<canvas id="three-canvas"></canvas>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="login" class="screen active">
+  <div class="login-hero">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>SISTec GN Bhopal — RGPV Affiliated</div>
+    <div class="ai-robot-wrap float-3d">
+      <div class="ai-robot">🤖</div>
+      <div class="orbit-dot orbit-dot-1"></div><div class="orbit-dot orbit-dot-2"></div><div class="orbit-dot orbit-dot-3"></div>
+    </div>
+    <h1 class="hero-title">Smart Campus<br/><span>Management</span><br/>Platform</h1>
+    <p class="hero-desc">AI-powered platform for SISTec GN students and faculty — PresenceIQ, resources, quizzes, placement and AI coaching, all in one place.</p>
+    <div class="hero-features">
+      <div class="hero-feat"><div class="hero-feat-icon">📷</div>PresenceIQ — AI-powered student presence scanner with live detection</div>
+      <div class="hero-feat"><div class="hero-feat-icon">📋</div>Student Attendance tracker — subject-wise % with AI alerts</div>
+      <div class="hero-feat"><div class="hero-feat-icon">🚌</div>Live Bus Tracker — real-time SISTec bus location &amp; ETAs</div>
+      <div class="hero-feat"><div class="hero-feat-icon">🧠</div>AI Notes Summarizer — paste notes, get instant smart summary</div>
+      <div class="hero-feat"><div class="hero-feat-icon">🤖</div>AI Chatbot — 24×7 campus assistant powered by Claude AI</div>
+      <div class="hero-feat"><div class="hero-feat-icon">🔔</div>Placement Alerts — instant job drive &amp; deadline notifications</div>
+    </div>
+    <div class="hero-developers">
+      <div class="hero-dev-label">Developed by</div>
+      <div class="dev-list">
+        <div class="dev-item"><div class="dev-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">JK</div><div><div class="dev-name">Jitendra Kumar</div><div class="dev-role">Lead Developer (Frontend) — CSE (AI&amp;DS), 2nd Sem</div></div></div>
+        <div class="dev-item"><div class="dev-avatar" style="background:linear-gradient(135deg,#2dd4bf,#22c55e)">AT</div><div><div class="dev-name">Aditya Tiwari</div><div class="dev-role">Backend Developer — CSE (AI&amp;DS), 2nd Sem</div></div></div>
+        <div class="dev-item"><div class="dev-avatar" style="background:linear-gradient(135deg,#f59e0b,#f472b6)">AS</div><div><div class="dev-name">Anuj Saru</div><div class="dev-role">UI/UX Designer — CSE (AI&amp;DS), 2nd Sem</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-form-panel">
+    <div class="form-logo">Edu<span>Sync</span> <span style="font-size:14px;font-weight:500;color:var(--text2);font-family:'Plus Jakarta Sans',sans-serif">Pro</span></div>
+    <div class="form-college">SISTec GN • Bhopal • RGPV</div>
+    <div class="form-title">Welcome back</div>
+    <div class="form-sub">Sign in to access your campus dashboard</div>
+    <div id="login-error" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:11px 14px;font-size:13px;color:#ef4444;margin-bottom:16px;font-weight:600;"></div>
+    <div class="field-wrap"><label class="field-label">Full Name</label><input class="field-input" type="text" id="login-name" placeholder="Enter your full name" autocomplete="name" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="field-wrap"><label class="field-label">Email Address</label><input class="field-input" type="email" id="login-email" placeholder="you@sistec.ac.in" autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="field-wrap"><label class="field-label">Password</label>
+      <div style="position:relative">
+        <input class="field-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" style="padding-right:44px" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <span onclick="togglePwd()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--muted)" id="pwd-eye">👁️</span>
+      </div>
+    </div>
+    <div class="field-wrap"><label class="field-label">Role</label>
+      <select class="field-input field-select" id="login-role" onchange="fillHint()">
+        <option value="student">🎓 Student</option>
+        <option value="teacher">🏫 Teacher / Faculty</option>
+      </select>
+    </div>
+    <div id="login-hint" style="background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.18);border-radius:10px;padding:11px 14px;margin-bottom:16px;font-size:11.5px;color:var(--text2);line-height:1.8">
+      <div style="font-weight:700;color:var(--blue2);margin-bottom:4px;font-size:12px" id="hint-title">🔐 Student Login Credentials</div>
+      <div id="hint-lines"></div>
+    </div>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="form-divider"><span>or</span></div>
+    <button class="btn-skip" onclick="doSkip()">Continue as Guest (Skip Login)</button>
+    <div class="form-footer">EduSync Pro v3.0 · SISTec GN Bhopal<br/>Built by Jitendra Kumar, Aditya Tiwari &amp; Anuj Saru</div>
+  </div>
+</div>
+
+<!-- ═══════════ TEACHER APP ═══════════ -->
+<div id="teacher-app" class="screen">
+  <div class="topbar">
+    <div class="topbar-brand"><div class="brand-name">Edu<span>Sync</span></div><div class="brand-sub">SISTec GN Bhopal</div></div>
+    <div class="topbar-right"><span class="role-pill teacher">Faculty</span><div class="topbar-avatar" id="teacher-avatar" onclick="logout()">PR</div></div>
+  </div>
+  <div class="app-shell">
+  <div class="bottom-nav" id="teacher-nav">
+    <div style="padding:8px 12px 10px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase" class="desktop-only">Menu</div>
+    <div class="nav-item active" onclick="switchPage('teacher','dashboard',this)"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
+    <div class="nav-item" onclick="switchPage('teacher','headcount',this)"><div class="nav-icon">🧿</div><div class="nav-label">PresenceIQ</div></div>
+    <div class="nav-item" onclick="switchPage('teacher','resources',this)"><div class="nav-icon">📚</div><div class="nav-label">Resources</div></div>
+    <div class="nav-item" onclick="switchPage('teacher','quiz',this)"><div class="nav-icon">📝</div><div class="nav-label">Quizzes</div></div>
+    <div class="nav-item" onclick="switchPage('teacher','placement',this)"><div class="nav-icon">💼</div><div class="nav-label">Placement</div></div>
+  </div>
+  <div class="main">
+    <div id="t-dashboard" class="page active">
+      <div class="greeting greeting-t"><div class="greeting-name" id="t-greeting-name">Good morning, Prof. Raj 👋</div><div class="greeting-date" id="t-date"></div></div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" style="color:var(--blue2)" id="t-total-count">—</div><div class="stat-lbl">Present</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--green)">11</div><div class="stat-lbl">Classes</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--amber)">3</div><div class="stat-lbl">Quizzes</div></div>
+      </div>
+      <div class="row-between"><div class="section-heading" style="font-size:18px">PresenceIQ</div><button class="btn btn-blue btn-sm" onclick="openCamera()">📷 Take Count</button></div>
+      <div class="class-grid" id="class-grid"></div>
+      <div class="card">
+        <div class="card-label">Recent Activity</div>
+        <div class="check-row"><div class="chk-circle done">✓</div><div><div style="font-size:13px;font-weight:600">Quiz: Data Structures published</div><div style="font-size:11px;color:var(--text2)">28 students attempted</div></div></div>
+        <div class="check-row"><div class="chk-circle done">✓</div><div><div style="font-size:13px;font-weight:600">OS Notes Ch.4 uploaded</div><div style="font-size:11px;color:var(--text2)">PDF · 2.3 MB</div></div></div>
+        <div class="check-row"><div class="chk-circle"></div><div><div style="font-size:13px;font-weight:600">Review Placement Applications</div><div style="font-size:11px;color:var(--text2)">3 pending review</div></div></div>
+      </div>
+    </div>
+    <div id="t-headcount" class="page">
+      <div class="row-between"><div class="section-heading">PresenceIQ</div><button class="btn btn-blue btn-sm" onclick="openCamera()">📷 Capture</button></div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" style="color:var(--blue2)" id="t-hc-total">—</div><div class="stat-lbl">Total</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="t-hc-counted">0</div><div class="stat-lbl">Counted</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--amber)">11</div><div class="stat-lbl">Classes</div></div>
+      </div>
+      <div class="card-label">A-Division</div><div class="class-grid" id="class-grid-a"></div>
+      <div class="card-label" style="margin-top:6px">B-Division</div><div class="class-grid" id="class-grid-b"></div>
+      <div class="card" style="margin-top:10px"><div class="card-label">PresenceIQ Log</div>
+        <div id="hc-log"><div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-txt">No captures yet</div></div></div>
+      </div>
+    </div>
+    <div id="t-resources" class="page">
+      <div class="section-heading">📚 Resources</div>
+      <div class="section-sub">Upload &amp; manage study materials for students</div>
+      <div class="upload-panel">
+        <div class="card-label">Select Upload Type</div>
+        <div class="upload-type-grid">
+          <div class="upload-type-btn active" id="utype-pdf" onclick="setUploadType('pdf',this)"><span class="upload-type-icon">📄</span>PDF / DOC / PPT</div>
+          <div class="upload-type-btn" id="utype-video" onclick="setUploadType('video',this)"><span class="upload-type-icon">🎥</span>Video Link</div>
+          <div class="upload-type-btn" id="utype-assignment" onclick="setUploadType('assignment',this)"><span class="upload-type-icon">📝</span>Assignment</div>
+          <div class="upload-type-btn" id="utype-pyq" onclick="setUploadType('pyq',this)"><span class="upload-type-icon">📋</span>PYQ Paper</div>
+        </div>
+      </div>
+      <div class="upload-panel">
+        <div class="card-label">Upload Material</div>
+        <div id="file-upload-zone">
+          <div class="dropzone" id="teacher-dropzone" onclick="document.getElementById('teacher-file-input').click()" ondragover="event.preventDefault();this.style.borderColor='var(--blue)'" ondragleave="this.style.borderColor=''" ondrop="handleTeacherDrop(event)">
+            <div class="dropzone-icon" id="dropzone-icon">📁</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px" id="dropzone-title">Click to upload or drag &amp; drop</div>
+            <div class="dropzone-txt" id="dropzone-hint">Supports PDF, DOC, DOCX, PPT, PPTX (max 50MB)</div>
+          </div>
+          <input type="file" id="teacher-file-input" accept=".pdf,.doc,.docx,.ppt,.pptx" style="display:none" onchange="handleTeacherFileSelect(event)"/>
+          <div id="file-selected-info" style="display:none;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:var(--r);padding:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px" id="file-sel-icon">📄</span>
+              <div><div style="font-size:13px;font-weight:600" id="file-sel-name"></div><div style="font-size:11px;color:var(--text2)" id="file-sel-size"></div></div>
+              <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="clearFileSelection()">✕</button></div>
+          </div>
+        </div>
+        <div id="video-upload-zone" style="display:none">
+          <label class="field-label">YouTube / Google Drive Link</label>
+          <input class="field-input" id="res-video-url" placeholder="https://www.youtube.com/watch?v=..." style="margin-bottom:14px"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div><label class="field-label">Subject</label>
+            <select class="field-input field-select" id="res-subject"><option>Data Structures</option><option>Operating Systems</option><option>DBMS</option><option>Computer Networks</option><option>Mathematics</option><option>Physics</option><option>Web Development</option><option>Machine Learning</option></select></div>
+          <div><label class="field-label">Semester</label>
+            <select class="field-input field-select" id="res-semester"><option>Sem 1</option><option>Sem 2</option><option>Sem 3</option><option>Sem 4</option><option>Sem 5</option><option>Sem 6</option><option>Sem 7</option><option>Sem 8</option></select></div>
+        </div>
+        <label class="field-label">Title / Description</label>
+        <input class="field-input" id="res-title" placeholder="e.g. Chapter 4 — Trees &amp; Graphs" style="margin-bottom:14px"/>
+        <button class="btn btn-blue btn-full" onclick="teacherUpload()" id="btn-teacher-upload">⬆️ Upload Resource</button>
+        <div id="upload-progress" style="display:none;margin-top:12px">
+          <div style="font-size:12px;color:var(--text2);margin-bottom:6px" id="upload-progress-txt">Uploading…</div>
+          <div style="background:var(--card2);border-radius:20px;height:6px;overflow:hidden"><div id="upload-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:20px;width:0%;transition:width .3s"></div></div>
+        </div>
+      </div>
+      <div class="row-between">
+        <div class="card-label" style="margin:0">All Resources (<span id="resource-count">0</span>)</div>
+        <select class="field-input field-select" id="filter-subject-teacher" style="padding:6px 28px 6px 10px;font-size:11px;height:auto;width:auto" onchange="renderTeacherResources()">
+          <option value="">All Subjects</option><option>Data Structures</option><option>Operating Systems</option><option>DBMS</option><option>Computer Networks</option><option>Mathematics</option>
+        </select>
+      </div>
+      <div id="t-resource-list" style="margin-top:12px"></div>
+    </div>
+    <div id="t-quiz" class="page">
+      <div class="section-heading">Quiz Manager</div><div class="section-sub">Create and publish quizzes for students</div>
+      <div class="card">
+        <div class="card-label">Create Quiz</div>
+        <label class="field-label">Quiz Title</label><input class="inp" id="quiz-title-input" placeholder="e.g. Mid-Sem: Data Structures"/>
+        <label class="field-label">Subject</label>
+        <select class="inp inp-sel" id="quiz-subject"><option>Data Structures</option><option>Operating Systems</option><option>DBMS</option><option>Computer Networks</option></select>
+        <div class="card-label" style="margin-top:6px">Questions</div>
+        <div id="questions-list"></div>
+        <button class="btn btn-ghost btn-sm btn-full" style="margin-bottom:10px" onclick="addQuestion()">+ Add Question</button>
+        <button class="btn btn-blue btn-full" onclick="publishQuiz()">Publish Quiz →</button>
+      </div>
+      <div class="card-label">Student Results</div><div id="t-results-list"></div>
+    </div>
+    <div id="t-placement" class="page">
+      <div class="section-heading">Placement Board</div><div class="section-sub">Post job &amp; internship opportunities</div>
+      <div class="card">
+        <div class="card-label">Post Opportunity</div>
+        <label class="field-label">Company</label><input class="inp" id="p-company" placeholder="e.g. Google"/>
+        <label class="field-label">Role</label><input class="inp" id="p-role" placeholder="e.g. Software Engineer"/>
+        <label class="field-label">Package (LPA)</label><input class="inp" id="p-package" placeholder="e.g. 18"/>
+        <label class="field-label">Min CGPA</label><input class="inp" id="p-cgpa" placeholder="e.g. 7.5"/>
+        <button class="btn btn-blue btn-full" onclick="postPlacement()">Post Opportunity</button>
+      </div>
+      <div class="card-label">Posted Opportunities</div><div id="t-placement-list"></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ═══════════ STUDENT APP ═══════════ -->
+<div id="student-app" class="screen">
+  <div class="topbar">
+    <div class="topbar-brand"><div class="brand-name">Edu<span>Sync</span></div><div class="brand-sub">SISTec GN Bhopal</div></div>
+    <div class="topbar-right"><span class="role-pill student" id="student-role-pill">Student</span>
+      <div class="topbar-avatar" style="background:linear-gradient(135deg,var(--teal),var(--green))" onclick="logout()" id="student-avatar">BP</div></div>
+  </div>
+  <div class="app-shell">
+  <div class="bottom-nav" id="student-nav">
+    <div style="padding:8px 12px 10px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase" class="desktop-only">Menu</div>
+    <div class="nav-item active s" onclick="switchPage('student','dashboard',this)"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
+    <div class="nav-item s" onclick="switchPage('student','resources',this)"><div class="nav-icon">📚</div><div class="nav-label">Study</div></div>
+    <div class="nav-item s" onclick="switchPage('student','library',this)"><div class="nav-icon">📖</div><div class="nav-label">Library</div></div>
+    <div class="nav-item s" onclick="switchPage('student','quiz',this)"><div class="nav-icon">📝</div><div class="nav-label">Quiz</div></div>
+    <div class="nav-item s" onclick="switchPage('student','agent',this)"><div class="nav-icon">🤖</div><div class="nav-label">AI Coach</div></div>
+    <div class="nav-item s" onclick="switchPage('student','bus',this)"><div class="nav-icon">🚌</div><div class="nav-label">Bus</div></div>
+    <div class="nav-item s" onclick="switchPage('student','analytics',this)"><div class="nav-icon">📊</div><div class="nav-label">Stats</div></div>
+    <div class="nav-item s" onclick="switchPage('student','placement',this)"><div class="nav-icon">💼</div><div class="nav-label">Jobs</div></div>
+    <div class="nav-divider"></div>
+    <div class="nav-item s" onclick="switchPage('student','interview',this)"><div class="nav-icon">🎤</div><div class="nav-label">Interview</div></div>
+    <div class="nav-item s" onclick="switchPage('student','campus',this)"><div class="nav-icon">🏫</div><div class="nav-label">Campus</div></div>
+    <div class="nav-item s" onclick="switchPage('student','headcount',this)"><div class="nav-icon">🧿</div><div class="nav-label">PresenceIQ</div></div>
+  </div>
+  <div class="main">
+    <div id="s-dashboard" class="page active">
+      <div class="greeting greeting-s"><div class="greeting-name" id="s-greeting-name">Hello, Jitendra 👋</div><div class="greeting-date" id="s-date"></div></div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" style="color:var(--teal)" id="s-avg-score">—</div><div class="stat-lbl">Avg Score</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="s-quizzes-done">0</div><div class="stat-lbl">Quizzes</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--amber)" id="s-bookmarks">0</div><div class="stat-lbl">Saved</div></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Quick Actions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <button class="btn" onclick="navTo('s-agent',4)">🤖 AI Coach</button>
+          <button class="btn" onclick="navTo('s-quiz',3)">📝 Take Quiz</button>
+          <button class="btn" onclick="navTo('s-library',2)">📖 Library</button>
+          <button class="btn" onclick="navTo('s-bus',5)">🚌 Bus Routes</button>
+          <button class="btn" onclick="navTo('s-analytics',6)">📊 Analytics</button>
+          <button class="btn" onclick="navTo('s-placement',7)">💼 Placements</button>
+          <button class="btn" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(45,212,191,.08));border-color:rgba(79,142,247,.3);color:var(--blue2)" onclick="navTo('s-headcount',10)">🧿 PresenceIQ — Attendance · Bus · Notes · Chat · Alerts</button>
+        </div>
+      </div>
+      <div class="card"><div class="card-label">Upcoming Quizzes</div><div id="s-upcoming"></div></div>
+    </div>
+    <div id="s-resources" class="page">
+      <div class="section-heading">Study Hub</div>
+      <div class="search-wrap"><span style="color:var(--muted)">🔍</span><input placeholder="Search resources…" oninput="filterResources(this.value)" id="s-search"/></div>
+      <div class="tab-pills" id="s-subject-tabs"></div>
+      <div id="s-resource-list"></div>
+    </div>
+    <div id="s-library" class="page">
+      <div class="section-heading">📖 Library Books</div><div class="section-sub">Semester-wise books available at SISTec GN Library</div>
+      <div class="sem-selector" id="lib-sems"></div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px" id="lib-desc"></div>
+      <div class="book-grid" id="book-grid"></div>
+    </div>
+    <div id="s-quiz" class="page">
+      <div id="s-quiz-list-view"><div class="section-heading">Quizzes</div><div id="s-quiz-list"></div></div>
+      <div id="s-quiz-take-view" style="display:none">
+        <div class="row-between" style="margin-bottom:8px"><div id="s-quiz-taking-title" class="section-heading" style="font-size:17px"></div><div id="s-q-counter" style="font-size:12px;color:var(--text2)"></div></div>
+        <div class="progress-track"><div class="progress-fill" id="s-progress-bar" style="width:0%"></div></div>
+        <div id="s-quiz-q-area"></div>
+        <button class="btn btn-blue btn-full" id="s-next-btn" style="margin-top:14px" onclick="nextQuestion()" disabled>Next →</button>
+      </div>
+      <div id="s-quiz-result-view" style="display:none">
+        <div class="score-display">
+          <div style="font-size:13px;color:var(--text2);margin-bottom:6px" id="s-result-title"></div>
+          <div class="score-num" id="s-score-num">0/0</div>
+          <div style="font-size:13px;color:var(--text2);margin-top:4px">Your Score</div>
+          <div class="score-acc" id="s-acc-badge">0%</div>
+        </div>
+        <div class="card"><div class="card-label">Answer Review</div><div id="s-review"></div></div>
+        <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="backToQuizList()">← Back to Quizzes</button>
+      </div>
+    </div>
+    <div id="s-agent" class="page">
+      <div id="agent-modes-view">
+        <div class="section-heading">🤖 AI Communication Coach</div><div class="section-sub">Real one-on-one AI sessions to sharpen your skills</div>
+        <div class="agent-hero">
+          <div class="tag tag-blue" style="margin-bottom:10px">Powered by Claude AI</div>
+          <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px">Your Personal AI Coach</div>
+          <div style="font-size:13px;color:var(--text2)">Practice interviews, debates, English speaking and group discussions with real-time AI feedback — like talking to a real coach.</div>
+        </div>
+        <div class="agent-modes" id="agent-mode-cards"></div>
+      </div>
+      <div id="agent-chat-view" style="display:none"></div>
+    </div>
+    <div id="s-bus" class="page">
+      <div class="section-heading">🚌 SISTec Bus Routes</div><div class="section-sub">All routes to SISTec GN campus</div>
+      <div class="bus-info-banner">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:12px;color:var(--text2)">🏫 Final Stop</span><span style="font-weight:700;color:var(--teal)">SISTec GN Campus</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:12px;color:var(--text2)">⏰ Arrival Time</span><span style="font-weight:700;color:var(--amber)">8:15 AM</span></div>
+        <div style="font-size:11px;color:var(--teal)">💡 Karond side — 3 buses on same route (42/02/49)</div>
+      </div>
+      <div class="contact-card">
+        <div class="card-label">Emergency Contacts</div>
+        <div class="contact-row"><div class="contact-icon-wrap">👨‍💼</div><div class="contact-info"><div class="contact-lbl">Transport Manager</div><div class="contact-num">7987760314</div></div><a class="btn btn-teal btn-sm" href="tel:7987760314">📞 Call</a></div>
+        <div class="contact-row"><div class="contact-icon-wrap">🧑‍🔧</div><div class="contact-info"><div class="contact-lbl">Supervisor</div><div class="contact-num">9893837199</div></div><a class="btn btn-teal btn-sm" href="tel:9893837199">📞 Call</a></div>
+      </div>
+      <div id="bus-list"></div>
+    </div>
+    <div id="s-analytics" class="page">
+      <div class="section-heading">My Performance</div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" style="color:var(--teal)" id="an-avg">—</div><div class="stat-lbl">Average</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="an-best">—</div><div class="stat-lbl">Best</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--amber)" id="an-done">0</div><div class="stat-lbl">Attempted</div></div>
+      </div>
+      <div class="card"><div class="card-label">By Subject</div><div id="an-bars"></div></div>
+      <div class="card"><div class="card-label">Quiz History</div><div id="an-history"></div></div>
+    </div>
+    <div id="s-placement" class="page">
+      <div class="section-heading">Placement Board</div>
+      <div class="pkg-banner"><div class="card-label">SISTec GN — Package Overview</div>
+        <div class="pkg-banner-grid">
+          <div><div class="pkg-val" style="color:var(--green)">₹21L+</div><div style="font-size:10px;color:var(--text2)">Highest</div></div>
+          <div><div class="pkg-val" style="color:var(--amber)">₹4.5L</div><div style="font-size:10px;color:var(--text2)">Average</div></div>
+          <div><div class="pkg-val" style="color:var(--blue2)">₹3-5L</div><div style="font-size:10px;color:var(--text2)">Most Get</div></div>
+        </div>
+      </div>
+      <div class="tab-pills" id="placement-filter-tabs">
+        <div class="tab-pill active blue" onclick="setPlacementTab('high',this)">🔝 High Package</div>
+        <div class="tab-pill" onclick="setPlacementTab('avg',this)">⚖️ Average</div>
+        <div class="tab-pill" onclick="setPlacementTab('mass',this)">📊 Mass Hiring</div>
+        <div class="tab-pill" onclick="setPlacementTab('all',this)">All</div>
+      </div>
+      <div class="search-wrap"><span style="color:var(--muted)">🔍</span><input placeholder="Search companies…" oninput="filterPlacements(this.value)"/></div>
+      <div id="s-placement-list"></div>
+    </div>
+
+    <div id="s-interview" class="page">
+      <div class="section-heading">🎤 AI Interview Lab</div><div class="section-sub">Voice + Face AI Interview System</div>
+      <div class="interview-panel">
+        <div class="ai-robot-wrap" style="width:60px;height:60px;margin:0 0 14px">
+          <div class="ai-robot" style="width:60px;height:60px;font-size:28px;border-radius:16px">🎙️</div>
+          <div class="orbit-dot orbit-dot-1"></div><div class="orbit-dot orbit-dot-2"></div>
+        </div>
+        <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px">AI Interview Assistant</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:16px">Practice HR &amp; Technical interviews with AI voice feedback</div>
+        <div class="interview-mode-tabs" id="interview-mode-tabs">
+          <div class="imode-tab active" onclick="setInterviewMode('hr',this)">👔 HR Round</div>
+          <div class="imode-tab" onclick="setInterviewMode('tech',this)">💻 Technical</div>
+          <div class="imode-tab" onclick="setInterviewMode('face',this)">📷 Face Interview</div>
+        </div>
+        <div id="voice-interview-ui">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:14px;min-height:60px">
+            <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">AI Question</div>
+            <div id="iv-current-question" style="font-size:14px;line-height:1.6;color:var(--text)">Click "Start Interview" to begin. The AI will ask you questions and analyze your responses.</div>
+          </div>
+          <div class="voice-visualizer" id="voice-visualizer">
+            <div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div>
+            <div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div>
+            <div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div><div class="voice-bar" style="height:6px"></div>
+          </div>
+          <div id="iv-transcript" style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px;min-height:18px"></div>
+          <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:16px">
+            <button class="voice-btn stop" id="btn-iv-stop" onclick="stopInterview()" title="Stop">⏹</button>
+            <button class="voice-btn record" id="btn-iv-record" onclick="toggleVoiceRecord()" title="Record Answer">🎤</button>
+            <button class="voice-btn next" id="btn-iv-next" onclick="nextInterviewQ()" title="Next Question">▶</button>
+          </div>
+          <button class="btn btn-blue btn-full" id="btn-start-interview" onclick="startVoiceInterview()">🚀 Start Interview</button>
+          <div class="score-ring-wrap" id="iv-scores" style="display:none">
+            <div class="score-ring"><div class="score-ring-num" id="iv-confidence" style="color:var(--blue2)">—</div><div class="score-ring-lbl">Confidence</div></div>
+            <div class="score-ring"><div class="score-ring-num" id="iv-clarity" style="color:var(--teal)">—</div><div class="score-ring-lbl">Clarity</div></div>
+            <div class="score-ring"><div class="score-ring-num" id="iv-relevance" style="color:var(--purple)">—</div><div class="score-ring-lbl">Relevance</div></div>
+          </div>
+          <div class="interview-log" id="interview-log" style="display:none"></div>
+        </div>
+        <div id="face-interview-ui" style="display:none">
+          <div class="face-interview-wrap">
+            <video id="face-video" autoplay playsinline muted></video>
+            <canvas id="face-canvas"></canvas>
+            <div class="face-overlay-stats" id="face-overlay-stats"></div>
+            <div class="face-score-bar" id="face-score-bar">
+              <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                <div style="font-size:11px;color:var(--muted)">Eye Contact: <span id="face-eye" style="color:var(--teal);font-weight:700">—</span></div>
+                <div style="font-size:11px;color:var(--muted)">Confidence: <span id="face-conf" style="color:var(--blue2);font-weight:700">—</span></div>
+                <div style="font-size:11px;color:var(--muted)">Engagement: <span id="face-engage" style="color:var(--purple);font-weight:700">—</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="face-emotion-grid">
+            <div class="emotion-card"><span class="emotion-emoji">😊</span><div class="emotion-name">Confidence</div><div class="emotion-pct" id="em-confident" style="color:var(--green)">—</div></div>
+            <div class="emotion-card"><span class="emotion-emoji">😐</span><div class="emotion-name">Neutral</div><div class="emotion-pct" id="em-neutral" style="color:var(--text2)">—</div></div>
+            <div class="emotion-card"><span class="emotion-emoji">😰</span><div class="emotion-name">Nervous</div><div class="emotion-pct" id="em-nervous" style="color:var(--amber)">—</div></div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-top:12px">
+            <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">AI Question</div>
+            <div id="face-current-q" style="font-size:13px;line-height:1.6">Press "Start Face Interview" to begin.</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-blue btn-full" id="btn-face-start" onclick="startFaceInterview()">📷 Start Face Interview</button>
+            <button class="btn btn-danger btn-sm" id="btn-face-stop" onclick="stopFaceInterview()" style="display:none">⏹ Stop</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">💡 AI analyzes eye contact, expressions &amp; confidence in real-time</div>
+        </div>
+      </div>
+      <div class="card card-sm"><div class="card-label">Voice Commands</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag tag-blue">🎙 "Start Interview"</span><span class="tag tag-teal">⏭ "Next Question"</span><span class="tag tag-blue">⏹ "Stop"</span><span class="tag tag-teal">🔄 "Repeat Question"</span></div>
+      </div>
+    </div>
+
+    <div id="s-campus" class="page">
+      <div class="section-heading">🏫 SISTec Gandhi Nagar Campus</div><div class="section-sub">Sagar Institute of Science and Technology, Bhopal</div>
+      <div class="campus-hero">
+        <div class="campus-hero-img">🏛️</div>
+        <div class="campus-info">
+          <div class="tag tag-blue" style="margin-bottom:10px">RGPV Affiliated · NAAC Accredited</div>
+          <div style="font-size:14px;line-height:1.7;color:var(--text2);margin-bottom:16px">SISTec Gandhi Nagar Campus is one of Bhopal's premier engineering institutions, offering world-class education in technology and science since 2009. Located on NH-12 highway, the campus spans 50+ acres with state-of-the-art infrastructure.</div>
+          <div class="campus-stat-row">
+            <div class="campus-stat"><div class="campus-stat-num" style="color:var(--blue2)">5000+</div><div class="campus-stat-lbl">Students</div></div>
+            <div class="campus-stat"><div class="campus-stat-num" style="color:var(--teal)">200+</div><div class="campus-stat-lbl">Faculty</div></div>
+            <div class="campus-stat"><div class="campus-stat-num" style="color:var(--green)">95%</div><div class="campus-stat-lbl">Placement</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-label">Courses Offered</div><div>
+        <span class="course-chip">B.E. CSE</span><span class="course-chip">B.E. IT</span><span class="course-chip">B.E. ECE</span><span class="course-chip">B.E. EE</span><span class="course-chip">B.E. ME</span><span class="course-chip">B.E. Civil</span><span class="course-chip">MBA</span><span class="course-chip">MCA</span><span class="course-chip">M.Tech</span><span class="course-chip">B.Pharma</span>
+      </div></div>
+      <div class="card"><div class="card-label">Campus Facilities</div>
+        <div class="facility-grid">
+          <div class="facility-item">🔬 Advanced Labs</div><div class="facility-item">📚 Central Library</div><div class="facility-item">🏋️ Sports Complex</div><div class="facility-item">🍽️ Modern Cafeteria</div><div class="facility-item">🏠 Hostels</div><div class="facility-item">🚌 Transport</div><div class="facility-item">🏥 Medical Center</div><div class="facility-item">🎭 Auditorium</div><div class="facility-item">📶 High-Speed Wi-Fi</div><div class="facility-item">🌿 Green Campus</div>
+        </div>
+      </div>
+      <div class="card"><div class="card-label">Departments</div>
+        <div class="dept-grid">
+          <div class="dept-card"><span class="dept-icon">💻</span><div class="dept-name">Computer Science</div><div class="dept-students">1200+ Students</div></div>
+          <div class="dept-card"><span class="dept-icon">📡</span><div class="dept-name">Electronics &amp; Comm</div><div class="dept-students">800+ Students</div></div>
+          <div class="dept-card"><span class="dept-icon">⚡</span><div class="dept-name">Electrical Engg</div><div class="dept-students">600+ Students</div></div>
+          <div class="dept-card"><span class="dept-icon">⚙️</span><div class="dept-name">Mechanical Engg</div><div class="dept-students">700+ Students</div></div>
+          <div class="dept-card"><span class="dept-icon">🔌</span><div class="dept-name">Information Tech</div><div class="dept-students">500+ Students</div></div>
+          <div class="dept-card"><span class="dept-icon">🏗️</span><div class="dept-name">Civil Engg</div><div class="dept-students">400+ Students</div></div>
+        </div>
+      </div>
+      <div class="card"><div class="card-label">Placement Highlights</div>
+        <div class="pkg-banner-grid" style="margin-bottom:14px">
+          <div><div class="pkg-val" style="color:var(--green)">₹21L+</div><div style="font-size:10px;color:var(--text2)">Highest Package</div></div>
+          <div><div class="pkg-val" style="color:var(--amber)">150+</div><div style="font-size:10px;color:var(--text2)">Companies Visit</div></div>
+          <div><div class="pkg-val" style="color:var(--blue2)">95%</div><div style="font-size:10px;color:var(--text2)">Placed</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-blue">Amazon</span><span class="tag tag-blue">Cisco</span><span class="tag tag-blue">Deloitte</span><span class="tag tag-teal">Accenture</span><span class="tag tag-teal">IBM</span><span class="tag tag-teal">Cognizant</span><span class="tag tag-green">TCS</span><span class="tag tag-green">Infosys</span><span class="tag tag-green">Wipro</span></div>
+      </div>
+      <div class="contact-card"><div class="card-label">Contact Information</div>
+        <div class="contact-row"><div class="contact-icon-wrap">📍</div><div class="contact-info"><div class="contact-lbl">Address</div><div style="font-size:13px;font-weight:600">Gandhi Nagar, Bhopal, MP — 462021</div></div></div>
+        <div class="contact-row"><div class="contact-icon-wrap">📞</div><div class="contact-info"><div class="contact-lbl">Phone</div><div class="contact-num">0755-2577-777</div></div></div>
+        <div class="contact-row"><div class="contact-icon-wrap">🌐</div><div class="contact-info"><div class="contact-lbl">Website</div><div class="contact-num">sistec.ac.in</div></div></div>
+        <div class="contact-row"><div class="contact-icon-wrap">✉️</div><div class="contact-info"><div class="contact-lbl">Email</div><div style="font-size:13px;font-weight:600;color:var(--teal)">info@sistec.ac.in</div></div></div>
+      </div>
+    </div>
+
+    <!-- Student PresenceIQ Hub -->
+    <div id="s-headcount" class="page">
+      <div style="background:linear-gradient(135deg,rgba(79,142,247,.12),rgba(45,212,191,.07));border:1px solid rgba(79,142,247,.25);border-radius:var(--r2);padding:18px;margin-bottom:18px;position:relative;overflow:hidden">
+        <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:54px;opacity:.12">👁️</div>
+        <div class="tag tag-blue" style="margin-bottom:8px">AI-Powered Student Dashboard</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px">PresenceIQ Hub</div>
+        <div style="font-size:12px;color:var(--text2)">Attendance · Bus Tracker · Notes Summarizer · AI Chatbot · Placement Alerts</div>
+      </div>
+      <div class="hc-tab-row" id="hc-tab-row">
+        <div class="hc-tab active" onclick="showHcTab('attendance',this)">📋 Attendance</div>
+        <div class="hc-tab" onclick="showHcTab('bustracker',this)">🚌 Bus Tracker</div>
+        <div class="hc-tab" onclick="showHcTab('notes',this)">🧠 Notes AI</div>
+        <div class="hc-tab" onclick="showHcTab('chatbot',this)">💬 AI Chat</div>
+        <div class="hc-tab" onclick="showHcTab('alerts',this)">🔔 Alerts</div>
+      </div>
+
+      <div id="hc-tab-attendance" class="hc-tab-panel active">
+        <div class="stats-grid" style="margin-bottom:14px">
+          <div class="stat-box"><div class="stat-num" id="att-overall" style="color:var(--teal)">78%</div><div class="stat-lbl">Overall</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="att-safe">4</div><div class="stat-lbl">Safe Subjects</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--red)" id="att-low">2</div><div class="stat-lbl">Low Alert</div></div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="row-between" style="margin-bottom:12px"><div class="card-label" style="margin:0">Subject-wise Attendance</div><span class="tag tag-blue">Sem 3 • CSE</span></div>
+          <div id="att-subject-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">AI Attendance Insight</div>
+          <div id="att-ai-insight" style="font-size:13px;line-height:1.7;color:var(--text2);padding:4px 0"></div>
+          <button class="btn btn-blue btn-full" style="margin-top:12px" onclick="refreshAttendance()">🔄 Refresh Attendance</button>
+        </div>
+      </div>
+
+      <div id="hc-tab-bustracker" class="hc-tab-panel" style="display:none">
+        <div style="background:linear-gradient(135deg,rgba(45,212,191,.1),rgba(34,197,94,.06));border:1px solid rgba(45,212,191,.2);border-radius:var(--r2);padding:14px;margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:13px;font-weight:700">🚌 Live Bus Status</span><span class="tag tag-teal" id="bus-live-badge">● SIMULATED</span></div>
+          <div style="font-size:11px;color:var(--text2)" id="bus-last-updated">Demo data for 10 routes (connect a GPS feed for real tracking)</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,10,25,.9),rgba(8,15,30,.95))"></div>
+          <div style="position:relative;text-align:center"><div id="bus-map-dots" style="position:relative;width:200px;height:120px;margin:0 auto 8px"></div><div style="font-size:11px;color:var(--teal)">🗺️ Route Map — Bhopal City</div></div>
+        </div>
+        <div class="card-label">Select Your Route</div>
+        <select class="field-input field-select" id="bt-route-select" style="margin-bottom:12px" onchange="updateBusTracker()">
+          <option value="24">Bus 24 — Narela Route</option><option value="42">Bus 42/02/49 — Karond Route</option><option value="06">Bus 06 — Neori Mandir</option><option value="11">Bus 11 — Chhola Road</option><option value="12">Bus 12 — Railway Station</option><option value="28">Bus 28 — Katara / 5 No Stop</option><option value="30">Bus 30 — Kolar Route</option><option value="31">Bus 31 — Mandideep</option><option value="18">Bus 18 — City Route</option><option value="50">Bus 50 — Nariyal Kheda</option>
+        </select>
+        <div class="card" id="bt-status-card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--green));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🚌</div>
+            <div><div style="font-size:15px;font-weight:700" id="bt-route-name">Bus 24 — Narela Route</div><div style="font-size:11px;color:var(--muted)" id="bt-route-sub">10 stops · Arrives at SISTec 8:15 AM</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="background:var(--card2);border-radius:var(--r);padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--teal)" id="bt-eta">8 min</div><div style="font-size:10px;color:var(--muted)">ETA</div></div>
+            <div style="background:var(--card2);border-radius:var(--r);padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--blue2)" id="bt-speed">34 km/h</div><div style="font-size:10px;color:var(--muted)">Speed</div></div>
+            <div style="background:var(--card2);border-radius:var(--r);padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--amber)" id="bt-stop">Stop 4/6</div><div style="font-size:10px;color:var(--muted)">Current</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--text2);background:var(--card2);border-radius:var(--r);padding:10px;margin-bottom:10px;border:1px solid var(--border)">📍 Currently at: <strong style="color:var(--teal)" id="bt-current-stop">Narela Jod</strong></div>
+          <button class="btn btn-teal btn-full" onclick="pingBusDriver()">📡 Ping Driver for Live Update</button>
+        </div>
+      </div>
+
+      <div id="hc-tab-notes" class="hc-tab-panel" style="display:none">
+        <div style="background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(79,142,247,.07));border:1px solid rgba(167,139,250,.25);border-radius:var(--r2);padding:14px;margin-bottom:14px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">🧠 AI Notes Summarizer</div>
+          <div style="font-size:12px;color:var(--text2)">Paste any notes or chapter — AI will summarize key points, create flashcards, and highlight important topics for exams.</div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-label">Paste Your Notes</div>
+          <textarea id="notes-input" placeholder="Paste your lecture notes, chapter text, or any study material here…" style="width:100%;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);padding:14px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;line-height:1.7;resize:vertical;min-height:140px;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn btn-blue btn-full" onclick="summarizeNotes()" id="btn-summarize">🧠 Summarize with AI</button>
+            <button class="btn btn-ghost btn-sm" onclick="document.getElementById('notes-input').value='';document.getElementById('notes-output').style.display='none'">✕ Clear</button>
+          </div>
+        </div>
+        <div id="notes-output" style="display:none">
+          <div class="card" style="margin-bottom:10px"><div class="card-label">📌 Key Summary</div><div id="notes-summary" style="font-size:13px;line-height:1.8;color:var(--text2)"></div></div>
+          <div class="card" style="margin-bottom:10px"><div class="card-label">⚡ Flashcards</div><div id="notes-flashcards"></div></div>
+          <div class="card"><div class="card-label">🎯 Exam Topics</div><div id="notes-topics" style="display:flex;flex-wrap:wrap;gap:6px;padding-top:4px"></div></div>
+        </div>
+        <div id="notes-loading" style="display:none;text-align:center;padding:30px">
+          <div style="font-size:32px;margin-bottom:10px;animation:spin 1s linear infinite;display:inline-block">⚙️</div>
+          <div style="font-size:13px;color:var(--text2)">AI is analyzing your notes…</div>
+        </div>
+      </div>
+
+      <div id="hc-tab-chatbot" class="hc-tab-panel" style="display:none;flex-direction:column;height:calc(100vh - 260px)">
+        <div style="background:linear-gradient(135deg,rgba(79,142,247,.12),rgba(167,139,250,.08));border:1px solid rgba(79,142,247,.2);border-radius:var(--r2);padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;animation:glowPulse 3s infinite">🤖</div>
+          <div><div style="font-size:14px;font-weight:700">SISTec Campus AI</div><div style="font-size:11px;color:var(--teal)">● Online · Powered by Claude AI</div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="clearChatbot()">🗑 Clear</button>
+        </div>
+        <div id="chatbot-messages" style="flex:1;overflow-y:auto;padding:4px 0;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:350px">
+          <div class="cb-msg cb-ai"><div class="cb-bubble cb-ai-bubble">👋 Hello! I'm your SISTec Campus AI. I can help with:<br/>• Attendance queries<br/>• Bus timings<br/>• Study tips &amp; notes<br/>• Placement info<br/>• Campus services<br/><br/>Ask me anything!</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <input id="chatbot-input" class="field-input" placeholder="Ask anything about campus, studies, placements…" style="flex:1;padding:11px 14px" onkeydown="if(event.key==='Enter')sendChatMessage()"/>
+          <button class="btn btn-blue" onclick="sendChatMessage()" style="padding:0 18px">➤</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px">
+          <button class="btn btn-ghost btn-sm" onclick="quickChat('What is my attendance?')" style="white-space:nowrap;font-size:11px">📋 My Attendance</button>
+          <button class="btn btn-ghost btn-sm" onclick="quickChat('When does Bus 24 arrive?')" style="white-space:nowrap;font-size:11px">🚌 Bus Timing</button>
+          <button class="btn btn-ghost btn-sm" onclick="quickChat('What companies visit SISTec?')" style="white-space:nowrap;font-size:11px">💼 Placements</button>
+          <button class="btn btn-ghost btn-sm" onclick="quickChat('How to improve my CGPA?')" style="white-space:nowrap;font-size:11px">📈 CGPA Tips</button>
+        </div>
+      </div>
+
+      <div id="hc-tab-alerts" class="hc-tab-panel" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div><div class="section-heading" style="font-size:17px;margin:0">🔔 Placement Alerts</div><div style="font-size:11px;color:var(--muted)">Job drive notifications</div></div>
+          <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--red)" id="alert-unread-count">● 3 New</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px">
+          <div class="tab-pill active blue" onclick="filterAlerts('all',this)" style="font-size:11px;padding:5px 12px">All</div>
+          <div class="tab-pill" onclick="filterAlerts('urgent',this)" style="font-size:11px;padding:5px 12px">🔴 Urgent</div>
+          <div class="tab-pill" onclick="filterAlerts('drive',this)" style="font-size:11px;padding:5px 12px">🏢 Job Drives</div>
+          <div class="tab-pill" onclick="filterAlerts('deadline',this)" style="font-size:11px;padding:5px 12px">⏰ Deadlines</div>
+          <div class="tab-pill" onclick="filterAlerts('internship',this)" style="font-size:11px;padding:5px 12px">📌 Internship</div>
+        </div>
+        <div id="placement-alerts-list"></div>
+        <div class="card" style="margin-top:12px">
+          <div class="card-label">Alert Settings</div>
+          <div class="check-row"><div class="chk-circle done" onclick="toggleAlertCheck('email',this)">✓</div><div><div style="font-size:13px;font-weight:600">Email Notifications</div><div style="font-size:11px;color:var(--muted)">student@sistec.ac.in</div></div></div>
+          <div class="check-row"><div class="chk-circle done" onclick="toggleAlertCheck('push',this)">✓</div><div><div style="font-size:13px;font-weight:600">Push Notifications</div><div style="font-size:11px;color:var(--muted)">Browser notifications</div></div></div>
+          <div class="check-row"><div class="chk-circle" onclick="toggleAlertCheck('sms',this)"></div><div><div style="font-size:13px;font-weight:600">SMS Alerts</div><div style="font-size:11px;color:var(--muted)">Register your phone number</div></div></div>
+          <button class="btn btn-blue btn-full" style="margin-top:10px" onclick="subscribeAlerts()">🔔 Subscribe to All Alerts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRESENCEIQ SCANNER MODAL ═══════════ -->
+<div class="modal-backdrop" id="camera-modal">
+  <div class="modal-box">
+    <div class="modal-title">🧿 PresenceIQ Scanner</div>
+    <div style="font-size:12px;color:var(--text2);margin:-10px 0 16px">Smart AI-powered student presence detection with live confidence scoring</div>
+    <div class="detection-mode-btns" id="detection-mode-btns">
+      <div class="det-mode-btn active" onclick="setDetectionMode('classroom',this)">🎓 Classroom</div>
+      <div class="det-mode-btn" onclick="setDetectionMode('assembly',this)">👥 Assembly</div>
+      <div class="det-mode-btn" onclick="setDetectionMode('crowd',this)">🏟️ Crowd</div>
+    </div>
+    <label class="field-label">Select Class</label>
+    <select class="field-input field-select" id="camera-class" style="margin-bottom:14px">
+      <option>A1</option><option>A2</option><option>A3</option><option>A4</option><option>A5</option><option>B1</option><option>B2</option><option>B3</option><option>B4</option><option>B5</option><option>B6</option>
+    </select>
+    <div class="cam-wrap" id="cam-wrap">
+      <video id="cam-video" autoplay playsinline style="width:100%;height:100%;object-fit:cover;display:none;border-radius:var(--r2)"></video>
+      <canvas id="cam-canvas" style="width:100%;height:100%;object-fit:contain;display:none;border-radius:var(--r2)"></canvas>
+      <div class="cam-placeholder" id="cam-placeholder">
+        <div style="font-size:48px">📷</div>
+        <div style="display:flex;gap:8px;margin-top:6px"><span style="font-size:11px;color:var(--blue2);background:rgba(79,142,247,.12);padding:4px 10px;border-radius:20px">📷 Live Camera</span><span style="font-size:11px;color:var(--teal);background:rgba(45,212,191,.1);padding:4px 10px;border-radius:20px">🖼️ Upload Photo</span></div>
+        <div class="cam-status-txt" id="cam-status">Tap Open Camera or Upload a Photo to begin</div>
+      </div>
+      <div class="cam-scan-line"></div>
+      <div class="cam-count-overlay" id="cam-count-overlay"><div class="cam-count-num" id="cam-count-num">0</div><div class="cam-count-lbl">Scanned</div></div>
+      <div class="rec-indicator" id="rec-indicator"><div class="rec-dot"></div><div class="rec-txt">LIVE</div></div>
+    </div>
+    <div class="hc-detection-grid" id="hc-detection-metrics" style="display:none">
+      <div class="hc-metric"><div class="hc-metric-num" id="hc-detected" style="color:var(--blue2)">0</div><div class="hc-metric-lbl">Scanned</div></div>
+      <div class="hc-metric"><div class="hc-metric-num" id="hc-confidence-pct" style="color:var(--green)">0%</div><div class="hc-metric-lbl">Accuracy</div></div>
+    </div>
+    <div class="hc-confidence-bar" id="hc-conf-bar" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:11px;color:var(--muted);font-weight:700">AI Confidence</div><div style="font-size:12px;font-weight:700;color:var(--teal)" id="hc-conf-txt">0%</div></div>
+      <div class="hc-conf-track"><div class="hc-conf-fill" id="hc-conf-fill" style="width:0%"></div></div>
+    </div>
+    <div class="bounding-box-legend" id="bbox-legend" style="display:none">
+      <div class="bbox-item"><div class="bbox-dot" style="border-color:var(--green)"></div><span>High Conf (&gt;80%)</span></div>
+      <div class="bbox-item"><div class="bbox-dot" style="border-color:var(--amber)"></div><span>Medium (50-80%)</span></div>
+      <div class="bbox-item"><div class="bbox-dot" style="border-color:var(--red)"></div><span>Low (&lt;50%)</span></div>
+    </div>
+    <div id="cam-result-area" style="display:none;text-align:center;margin:14px 0">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Students Scanned</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:44px;font-weight:800;color:var(--blue2)" id="cam-result-num">0</div>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:10px">
+        <button class="btn btn-sm" onclick="adjustCount(-5)">−5</button><button class="btn btn-sm" onclick="adjustCount(-1)">−1</button><button class="btn btn-sm" onclick="adjustCount(1)">+1</button><button class="btn btn-sm" onclick="adjustCount(5)">+5</button>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px">Manually adjust if needed</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost btn-sm" onclick="closeCamera()">Cancel</button>
+      <button class="btn btn-blue btn-sm" id="btn-open-cam" onclick="openCameraStream()">📷 Open Camera</button>
+      <button class="btn btn-teal btn-sm" id="btn-upload-photo" onclick="document.getElementById('photo-file-input').click()">🖼️ Upload Photo</button>
+      <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/>
+      <button class="btn btn-blue btn-sm" id="btn-capture" style="display:none" onclick="capturePhoto()">📸 Capture</button>
+      <button class="btn btn-ghost btn-sm" id="btn-retake" style="display:none" onclick="retakePhoto()">↻ Retake</button>
+      <button class="btn btn-blue btn-sm" id="btn-save" style="display:none" onclick="saveHeadcount()">✓ Save Count</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Third-party libraries (pinned versions) -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.14.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface@0.0.7/dist/blazeface.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- App scripts — ORDER MATTERS (each file may use globals from the ones above it) -->
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/core.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/student.js"></script>
+<script src="js/coach.js"></script>
+<script src="js/interview.js"></script>
+<script src="js/hub.js"></script>
+<script src="js/three-bg.js"></script>
+<script src="js/boot.js"></script>
+</body>
+</html>
